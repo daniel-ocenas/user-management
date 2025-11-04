@@ -1,0 +1,142 @@
+[
+  {
+    "email": "alice.morgan@example.com",
+    "firstName": "Alice",
+    "lastName": "Morgan",
+    "company": "Skyline Tech",
+    "password": "password123"
+  },
+  {
+    "email": "benjamin.hughes@example.com",
+    "firstName": "Benjamin",
+    "lastName": "Hughes",
+    "company": "NovaSoft",
+    "password": "securePass1"
+  },
+  {
+    "email": "chloe.evans@example.com",
+    "firstName": "Chloe",
+    "lastName": "Evans",
+    "company": "BrightPath Solutions",
+    "password": "mypassword"
+  },
+  {
+    "email": "daniel.taylor@example.com",
+    "firstName": "Daniel",
+    "lastName": "Taylor",
+    "company": "NextGen Labs",
+    "password": "daniel2024"
+  },
+  {
+    "email": "emma.wilson@example.com",
+    "firstName": "Emma",
+    "lastName": "Wilson",
+    "company": "InnovateX",
+    "password": "emmaPW123"
+  },
+  {
+    "email": "felix.adams@example.com",
+    "firstName": "Felix",
+    "lastName": "Adams",
+    "company": "PixelWorks",
+    "password": "felixpass"
+  },
+  {
+    "email": "grace.miller@example.com",
+    "firstName": "Grace",
+    "lastName": "Miller",
+    "company": "DataForge",
+    "password": "grace@2025"
+  },
+  {
+    "email": "harry.davis@example.com",
+    "firstName": "Harry",
+    "lastName": "Davis",
+    "company": "BlueRock Systems",
+    "password": "harrypass"
+  },
+  {
+    "email": "isabella.ross@example.com",
+    "firstName": "Isabella",
+    "lastName": "Ross",
+    "company": "TechCore",
+    "password": "isa12345"
+  },
+  {
+    "email": "jackson.carter@example.com",
+    "firstName": "Jackson",
+    "lastName": "Carter",
+    "company": "GreenField Analytics",
+    "password": "jacksonPWD"
+  },
+  {
+    "email": "kate.johnson@example.com",
+    "firstName": "Kate",
+    "lastName": "Johnson",
+    "company": "CyberNova",
+    "password": "k@tePW"
+  },
+  {
+    "email": "liam.thomas@example.com",
+    "firstName": "Liam",
+    "lastName": "Thomas",
+    "company": "CloudSync",
+    "password": "liam2025"
+  },
+  {
+    "email": "mia.harrison@example.com",
+    "firstName": "Mia",
+    "lastName": "Harrison",
+    "company": "BrightEdge",
+    "password": "miaStrong"
+  },
+  {
+    "email": "noah.king@example.com",
+    "firstName": "Noah",
+    "lastName": "King",
+    "company": "Streamline IT",
+    "password": "noahkey"
+  },
+  {
+    "email": "olivia.walker@example.com",
+    "firstName": "Olivia",
+    "lastName": "Walker",
+    "company": "PulseTech",
+    "password": "oliviaPW"
+  },
+  {
+    "email": "peter.young@example.com",
+    "firstName": "Peter",
+    "lastName": "Young",
+    "company": "Visionary Labs",
+    "password": "peter123"
+  },
+  {
+    "email": "quinn.harris@example.com",
+    "firstName": "Quinn",
+    "lastName": "Harris",
+    "company": "DataEdge",
+    "password": "quinn@data"
+  },
+  {
+    "email": "ruby.brown@example.com",
+    "firstName": "Ruby",
+    "lastName": "Brown",
+    "company": "SmartWorks",
+    "password": "ruby!pass"
+  },
+  {
+    "email": "samuel.white@example.com",
+    "firstName": "Samuel",
+    "lastName": "White",
+    "company": "NextVision",
+    "password": "samuelPWD"
+  },
+  {
+    "email": "taylor.moore@example.com",
+    "firstName": "Taylor",
+    "lastName": "Moore",
+    "company": "CoreTech Global",
+    "password": "taylor2025"
+  }
+]

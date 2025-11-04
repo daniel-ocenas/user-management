@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package user;
+
+service UserService {
+  rpc Register (UserRegisterRequest) returns (UserRegisterResponse);
+  rpc Login (UserLoginRequest) returns (UserLoginResponse);
+  rpc UserDetail (UserDetailRequest) returns (UserDetailResponse);
+  rpc ListUsers (Empty) returns (UserListResponse);
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string company = 5;
+  string password = 6;
+}
+
+message UserDto {
+  string email = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string company = 4;
+  string password = 5;
+}
+
+message UserDetail {
+  string id = 1;
+  string email = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string company = 5;
+}
+
+message UserPreview {
+  string id = 1;
+  string email = 2;
+}
+
+message UserRegisterRequest {
+  UserDto user = 1;
+}
+message UserRegisterResponse {
+  string id = 1;
+}
+
+message UserLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+message UserLoginResponse {
+  string token = 1;
+}
+
+message UserDetailRequest {
+  string userId = 1;
+}
+message UserDetailResponse {
+  UserDetail user = 1;
+}
+
+message UserListResponse {
+  repeated UserPreview users = 1;
+}
+message Empty {}
