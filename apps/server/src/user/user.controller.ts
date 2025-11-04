@@ -59,7 +59,7 @@ export class UserController implements UserServiceController {
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : 'Unknown server error';
-      throw new RpcException({ code: 5, message });
+      throw new RpcException({ code: 500, message });
     }
   }
 
@@ -76,7 +76,7 @@ export class UserController implements UserServiceController {
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : 'Unknown server error';
-      throw new RpcException({ code: 5, message });
+      throw new RpcException({ code: 500, message });
     }
   }
 
@@ -90,7 +90,7 @@ export class UserController implements UserServiceController {
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : 'Unknown server error';
-      throw new RpcException({ code: 5, message });
+      throw new RpcException({ code: 500, message });
     }
   }
 
@@ -108,7 +108,7 @@ export class UserController implements UserServiceController {
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : 'Unknown server error';
-      throw new RpcException({ code: 5, message });
+      throw new RpcException({ code: 500, message });
     }
   }
 }
