@@ -9,11 +9,7 @@ export class UserController {
 
   @Post('register')
   create(@Body() createUserDto: UserRegisterRequest) {
-    try {
-      return this.usersService.register(createUserDto);
-    } catch (e) {
-      console.log(e);
-    }
+    return this.usersService.register(createUserDto);
   }
 
   @Post('login')
@@ -22,18 +18,13 @@ export class UserController {
   }
 
   @Get()
-  listUsers() {
-    return this.usersService.listUsers();
+  listUsers(@Query() query: QueryUsersDto) {
+    const { page, limit } = query;
+    return this.usersService.queryUsers(page, limit);
   }
 
   @Get(':id')
   userDetail(@Param('id') id: string) {
     return this.usersService.userDetail(id);
-  }
-
-  @Get()
-  async queryUsers(@Query() query: QueryUsersDto) {
-    const { page, limit } = query;
-    return this.usersService.queryUsers(page, limit);
   }
 }

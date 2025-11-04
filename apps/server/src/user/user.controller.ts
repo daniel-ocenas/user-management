@@ -27,7 +27,10 @@ export class UserController implements UserServiceController {
     const newUser = request.user;
     if (!newUser) {
       this.logger.warn('Register request missing user data.');
-      return { id: '' };
+      throw new RpcException({
+        statusCode: 400,
+        message: 'Register request missing user data.',
+      });
     }
 
     this.logger.log(`Received Register request for user: ${newUser?.email}`);
@@ -37,9 +40,10 @@ export class UserController implements UserServiceController {
       this.logger.log(`User ${newUser.email} successfully registered.`);
       return { id };
     } catch (err: unknown) {
+      const code = err instanceof Error ? err.message : 5;
       const message =
         err instanceof Error ? err.message : 'Unknown server error';
-      throw new RpcException({ code: 5, message });
+      throw new RpcException({ code, message });
     }
   }
 

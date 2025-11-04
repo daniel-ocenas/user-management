@@ -10,7 +10,6 @@ import {
 } from '@app/common';
 import {
   Injectable,
-  Logger,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -21,15 +20,15 @@ import { randomUUID } from 'crypto';
 @Injectable()
 export class UserService {
   private readonly users: User[] = [];
-  private readonly logger = new Logger(UserService.name);
 
   constructor(private readonly jwtService: JwtService) {}
 
   async create(userDto: UserDto): Promise<string> {
     if (userDto && this.users.some((u: User) => u.email === userDto.email)) {
-      throw new UnauthorizedException(
-        `User with email ${userDto.email} already registered`,
-      );
+      throw new UnauthorizedException({
+        statusCode: 409,
+        message: `User with email ${userDto.email} already registered`,
+      });
     }
 
     const hashedPassword: string = await hash(userDto.password, 10);
@@ -62,7 +61,10 @@ export class UserService {
   findOne(id: string): UserDetailResponse {
     const user = this.users.find((user) => user.id === id);
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(
+        { code: 404 },
+        `User with ID ${id} not found`,
+      );
     }
     return { user };
   }

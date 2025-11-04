@@ -15,7 +15,7 @@ import {
   Logger,
   OnModuleInit,
 } from '@nestjs/common';
-import type { ClientGrpc } from '@nestjs/microservices';
+import { type ClientGrpc } from '@nestjs/microservices';
 import * as fs from 'fs';
 import { join } from 'path';
 import {
@@ -30,6 +30,7 @@ import {
 @Injectable()
 export class UserService implements OnModuleInit {
   private userService: UserServiceClient;
+  private readonly logger = new Logger(UserService.name);
   private readonly pageRequest = new Subject<{
     page: number;
     limit: number;
@@ -40,21 +41,21 @@ export class UserService implements OnModuleInit {
       this.client.getService<UserServiceClient>(USER_SERVICE_NAME);
 
     // UC 4.1 Load and register users from a file
-    Logger.debug('UC 4.1. Load and register users from a file');
+    this.logger.debug('UC 4.1. Load and register users from a file');
     const users = this.loadUsersFromFile();
     await this.registerAllUsers(users);
 
     // US 4.2.1
-    Logger.debug('UC 4.2.1. Query users with pagination');
+    this.logger.debug('UC 4.2.1. Query users with pagination');
     await this.queryUsers(2, 5);
     // US 4.2.2
-    Logger.debug('UC 4.2.2. Query users with pagination');
+    this.logger.debug('UC 4.2.2. Query users with pagination');
     await this.queryUsers(2, 10);
     // US 4.2.3
-    Logger.debug('UC 4.2.3. Register a user that already exists');
+    this.logger.debug('UC 4.2.3. Register a user that already exists');
     await this.implementUC423();
     // US 4.2.4
-    Logger.debug(
+    this.logger.debug(
       'UC 4.2.4. Login a user that already exists and get a JWT token',
     );
     await this.implementUC424();
@@ -81,7 +82,7 @@ export class UserService implements OnModuleInit {
   initPagination(): Observable<UserQueryResponse> {
     return this.pageRequest.pipe(
       tap(({ page, limit }) =>
-        Logger.log(`Requesting users for page=${page}, limit=${limit}`),
+        this.logger.log(`Requesting users for page=${page}, limit=${limit}`),
       ),
       switchMap(({ page, limit }) =>
         this.userService.queryUsers({ page, limit }),
@@ -99,15 +100,15 @@ export class UserService implements OnModuleInit {
       const usersData = JSON.parse(
         fs.readFileSync(filePath, 'utf8'),
       ) as UserDto[];
-      Logger.log(
+      this.logger.log(
         `Successfully loaded ${usersData.length} users from ${filePath}`,
       );
       return usersData;
     } catch (e) {
       if (e.code === 'ENOENT') {
-        Logger.warn(`File not found: ${filePath}. No users loaded.`);
+        this.logger.warn(`File not found: ${filePath}. No users loaded.`);
       } else {
-        Logger.error(`Error loading users from ${filePath}: ${e.message}`);
+        this.logger.error(`Error loading users from ${filePath}: ${e.message}`);
       }
       return [];
     }
@@ -126,9 +127,9 @@ export class UserService implements OnModuleInit {
       .filter((r) => r.status === 'fulfilled')
       .map((r) => r.value);
     if (registeredIds.length > 0) {
-      Logger.log(`Registered user IDs: ${registeredIds.join(', ')}`);
+      this.logger.log(`Registered user IDs: ${registeredIds.join(', ')}`);
     } else {
-      Logger.warn('No users registered.');
+      this.logger.warn('No users registered.');
     }
   }
 
@@ -152,11 +153,15 @@ export class UserService implements OnModuleInit {
           const receivedUserIds: string = response.users
             .map((u: UserPreview) => u.id)
             .join(', ');
-          Logger.log(
+          this.logger.log(
             `Received ${response.users.length} users (page ${response.page}), Received user ids: ${receivedUserIds}`,
           );
           resolve(response);
           subscription.unsubscribe();
+        },
+        (error) => {
+          this.logger.error(`Error querying users: ${error.details}`);
+          resolve(error);
         },
       );
 
@@ -179,9 +184,10 @@ export class UserService implements OnModuleInit {
       );
     } catch (e) {
       if (e.code === 5) {
-        Logger.warn('User already exists.');
+        this.logger.log(e);
+        this.logger.warn('User already exists.');
       } else {
-        Logger.error(`Error registering user: ${e.message}`);
+        this.logger.error(`Error registering user: ${e.message}`);
       }
     }
   }
@@ -193,11 +199,11 @@ export class UserService implements OnModuleInit {
       const loginResponse = await firstValueFrom(
         this.userService.login({ email, password }),
       );
-      Logger.log(
+      this.logger.log(
         `User with email: ${email} successfully logged in. JWT token: ${loginResponse.token}`,
       );
     } catch (e) {
-      Logger.error(`Error logging in user: ${e?.message}`);
+      this.logger.error(`Error logging in user: ${e?.message}`);
     }
   }
 }
