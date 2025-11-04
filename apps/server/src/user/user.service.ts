@@ -10,6 +10,7 @@ import {
 } from '@app/common';
 import {
   Injectable,
+  Logger,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -19,12 +20,14 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger(UserService.name);
   private readonly users: User[] = [];
 
   constructor(private readonly jwtService: JwtService) {}
 
   async create(userDto: UserDto): Promise<string> {
     if (userDto && this.users.some((u: User) => u.email === userDto.email)) {
+      this.logger.error(`User with email ${userDto.email} already registered`);
       throw new UnauthorizedException({
         statusCode: 409,
         message: `User with email ${userDto.email} already registered`,
