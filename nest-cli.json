@@ -11,20 +11,6 @@
   "monorepo": true,
   "root": "apps/server",
   "projects": {
-    "server": {
-      "type": "application",
-      "root": "apps/server",
-      "entryFile": "src/main",
-      "sourceRoot": "./",
-      "compilerOptions": {
-        "tsConfigPath": "apps/server/tsconfig.app.json",
-        "assets": [
-          "proto/*.proto",
-          "data/users-init.json"
-        ],
-        "watchAssets": true
-      }
-    },
     "client": {
       "type": "application",
       "root": "apps/client",
@@ -33,7 +19,8 @@
       "compilerOptions": {
         "tsConfigPath": "apps/client/tsconfig.app.json",
         "assets": [
-          "proto/*.proto"
+          "proto/*.proto",
+          "data/users-init.json"
         ],
         "watchAssets": true
       }
@@ -45,6 +32,19 @@
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "server": {
+      "type": "application",
+      "root": "apps/server",
+      "entryFile": "src/main",
+      "sourceRoot": "./",
+      "compilerOptions": {
+        "tsConfigPath": "apps/server/tsconfig.app.json",
+        "assets": [
+          "proto/*.proto"
+        ],
+        "watchAssets": true
       }
     }
   }
