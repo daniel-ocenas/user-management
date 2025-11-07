@@ -36,29 +36,9 @@ export class UserService implements OnModuleInit {
     limit: number;
   }>();
 
-  async onModuleInit() {
+  onModuleInit() {
     this.userService =
       this.client.getService<UserServiceClient>(USER_SERVICE_NAME);
-
-    // UC 4.1 Load and register users from a file
-    this.logger.debug('UC 4.1. Load and register users from a file');
-    const users = this.loadUsersFromFile();
-    await this.registerAllUsers(users);
-
-    // US 4.2.1
-    this.logger.debug('UC 4.2.1. Query users with pagination');
-    await this.queryUsers(2, 5);
-    // US 4.2.2
-    this.logger.debug('UC 4.2.2. Query users with pagination');
-    await this.queryUsers(2, 10);
-    // US 4.2.3
-    this.logger.debug('UC 4.2.3. Register a user that already exists');
-    await this.implementUC423();
-    // US 4.2.4
-    this.logger.debug(
-      'UC 4.2.4. Login a user that already exists and get a JWT token',
-    );
-    await this.implementUC424();
   }
 
   constructor(@Inject(USER_PACKAGE_NAME) private client: ClientGrpc) {}
@@ -167,43 +147,5 @@ export class UserService implements OnModuleInit {
 
       this.nextPage(+page, +limit);
     });
-  }
-
-  async implementUC423() {
-    try {
-      await firstValueFrom(
-        this.register({
-          user: {
-            email: 'samuel.white@example.com',
-            firstName: 'Samuel',
-            lastName: 'White',
-            company: 'NextVision',
-            password: 'samuelPWD',
-          },
-        }),
-      );
-    } catch (e) {
-      if (e.code === 5) {
-        this.logger.log(e);
-        this.logger.warn('User already exists.');
-      } else {
-        this.logger.error(`Error registering user: ${e.message}`);
-      }
-    }
-  }
-
-  async implementUC424() {
-    try {
-      const email = 'samuel.white@example.com';
-      const password = 'samuelPWD';
-      const loginResponse = await firstValueFrom(
-        this.userService.login({ email, password }),
-      );
-      this.logger.log(
-        `User with email: ${email} successfully logged in. JWT token: ${loginResponse.token}`,
-      );
-    } catch (e) {
-      this.logger.error(`Error logging in user: ${e?.message}`);
-    }
   }
 }

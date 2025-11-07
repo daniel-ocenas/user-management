@@ -40,7 +40,7 @@ export class UserController implements UserServiceController {
       this.logger.log(`User ${newUser.email} successfully registered.`);
       return { id };
     } catch (err: unknown) {
-      const code = err instanceof Error ? err.message : 5;
+      const code = err instanceof Error ? err.message : 500;
       const message =
         err instanceof Error ? err.message : 'Unknown server error';
       throw new RpcException({ code, message });

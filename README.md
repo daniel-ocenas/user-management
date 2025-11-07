@@ -29,15 +29,17 @@ This service provides user registration, authentication (JWT), listing, and pagi
 
 ```npm install```
 
-### Generate gRPC code from .proto files
-
-```npm run proto:generate```
-
-### Start development server and client localy
+### Start development server and client locally
 
 ```npm run start:server```
 
 ```npm run start:client```
+
+### Other scripts
+
+### Generate gRPC code from .proto files
+
+```npm run proto:generate```
 
 ---
 
